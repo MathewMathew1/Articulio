@@ -1,0 +1,60 @@
+<div
+  class="p-4 border rounded mb-2 dark:border-gray-700 dark:bg-gray-800 relative"
+>
+  <div class="absolute right-0 top-0 flex">
+    <button
+      (click)="onFavoriteClick($event)"
+      class="flex items-center gap-2 w-full px-2 py-2 hover:bg-gray-700 focus:outline-none"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-6 w-6 text-yellow-400"
+        fill="currentColor"
+        viewBox="0 0 20 20"
+        stroke="none"
+      >
+        <path
+          d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.957a1 1 0 00.95.69h4.153c.969 0 1.371 1.24.588 1.81l-3.36 2.44a1 1 0 00-.364 1.118l1.286 3.957c.3.921-.755 1.688-1.54 1.118l-3.36-2.44a1 1 0 00-1.175 0l-3.36 2.44c-.784.57-1.838-.197-1.539-1.118l1.285-3.957a1 1 0 00-.364-1.118L2.03 9.384c-.783-.57-.38-1.81.588-1.81h4.153a1 1 0 00.95-.69l1.286-3.957z"
+        />
+      </svg>
+    </button>
+    <button
+      (click)="openFavoriteModal()"
+      class="flex items-center justify-center w-10 h-10 rounded hover:bg-gray-700 focus:outline-none"
+      aria-label="Add to favorites"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-6 w-6 text-blue-400"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M12 4v16m8-8H4"
+        />
+      </svg>
+    </button>
+  </div>
+  <a
+    (click)="onArticleClick(article.url)"
+    [href]="article.url"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="text-lg font-semibold text-blue-400 hover:underline"
+  >
+    {{ article.title }}
+  </a>
+  <p class="text-gray-300 mt-1">{{ article.description }}</p>
+</div>
+<app-to-read-modal
+  *ngIf="isFavoriteModalOpen"
+  [title]="article.title"
+  [description]="article.description"
+  (save)="saveFavorite($event)"
+  (close)="closeModal()"
+  [isUpdate]="true"
+/>

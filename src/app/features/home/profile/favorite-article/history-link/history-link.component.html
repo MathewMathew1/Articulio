@@ -1,0 +1,13 @@
+<div class="p-4 border rounded dark:border-gray-700 dark:bg-gray-800">
+  <a
+    [href]="link.url"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="text-blue-400 hover:underline break-words"
+  >
+    {{ link.url }}
+  </a>
+  <p class="text-sm text-gray-400 mt-1 italic">
+    Visited at: {{ formattedDate }}
+  </p>
+</div>

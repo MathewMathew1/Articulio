@@ -1,0 +1,27 @@
+<section class="my-6 p-4 border rounded bg-gray-900 text-gray-300" [style.max-height.px]="500" style="overflow-y: auto;" *ngIf="visible">
+  <h3 class="text-xl font-semibold mb-3">Most Downloaded Articles</h3>
+
+  <ul *ngIf="articles.length; else noData">
+    <li *ngFor="let article of articles" class="mb-4">
+      <a (click)="onArticleClick(article.articleUrl)" [href]="article.articleUrl" target="_blank" rel="noopener noreferrer" class="underline hover:text-blue-400 font-bold">
+        {{ article.title || article.articleUrl }}
+      </a>
+      <p *ngIf="article.description" class="text-sm text-gray-400 mt-1">
+        {{ article.description }}
+      </p>
+    </li>
+  </ul>
+
+  <button
+    *ngIf="!loadedAll"
+    (click)="loadArticles()"
+    class="mt-4 px-4 py-2 text-sm bg-blue-600 hover:bg-blue-700 text-white rounded"
+  >
+    Load More
+  </button>
+
+  <ng-template #noData>
+    <p>No popular articles found.</p>
+  </ng-template>
+</section>
+

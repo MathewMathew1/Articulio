@@ -1,0 +1,28 @@
+<div *ngIf="visible" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
+  <div class="bg-gray-900 text-gray-100 p-6 rounded-lg max-w-4xl w-full max-h-[90vh] flex flex-col">
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-lg font-semibold">Full Text</h2>
+      <button (click)="close()" aria-label="Close" class="text-gray-400 hover:text-red-500 text-xl">×</button>
+    </div>
+
+    <!-- Controls -->
+    <div class="flex justify-between items-center mb-2 text-sm">
+      <div class="flex gap-2">
+        <button (click)="decreaseFont()" class="px-2 py-1 bg-gray-700 rounded hover:bg-gray-600">–</button>
+        <span class="px-1">{{ fontSize }}px</span>
+        <button (click)="increaseFont()" class="px-2 py-1 bg-gray-700 rounded hover:bg-gray-600">+</button>
+      </div>
+      <div class="flex gap-2">
+        <button (click)="prevPage()" [disabled]="currentPage === 0" class="px-2 py-1 bg-gray-700 rounded hover:bg-gray-600">←</button>
+        <span>Page {{ currentPage + 1 }} / {{ totalPages }}</span>
+        <button (click)="nextPage()" [disabled]="currentPage === totalPages - 1" class="px-2 py-1 bg-gray-700 rounded hover:bg-gray-600">→</button>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="overflow-y-auto border border-gray-700 rounded p-4 bg-gray-800 text-justify" [ngStyle]="{ 'font-size.px': fontSize }">
+      <p>{{ pageText }}</p>
+    </div>
+  </div>
+</div>

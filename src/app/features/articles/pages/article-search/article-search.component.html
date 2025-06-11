@@ -1,0 +1,82 @@
+<div class="w-full py-4 ">
+  <h1 class="text-2xl font-bold mb-4">Search Articles</h1>
+
+<div class="flex gap-2 mb-4 items-start justify-between flex-col sm:flex-row">
+  <ui-input
+
+    (keyup.enter)="search()"
+    [(ngModel)]="query"
+    placeholder="Search query..."
+  />
+  <div class="relative w-full sm:w-auto">
+    <button
+      (click)="toggleDropdown()"
+      class="bg-gray-700 text-gray-100 px-4 py-2 rounded hover:bg-gray-600 w-full sm:w-auto"
+    >
+      Sources ({{ selectedSources.size }})
+    </button>
+
+    <div
+      *ngIf="dropdownOpen"
+      class="absolute right-0 mt-2 w-48 bg-gray-800 border border-gray-700 rounded shadow-lg z-10"
+    >
+      <label
+        *ngFor="let source of getSources()"
+        class="flex items-center px-4 py-2 hover:bg-gray-700 cursor-pointer"
+      >
+        <input
+          type="checkbox"
+          [checked]="selectedSources.has(source)"
+          (change)="toggleSource(source)"
+          class="mr-2"
+        />
+        <span class="capitalize text-gray-100">{{ source }}</span>
+      </label>
+    </div>
+  </div>
+
+  <ui-button class="w-full sm:w-32 sm:h-full" color="blue" [disabled]="loadLocks.contains('search')"
+    (click)="search()"
+
+  >
+    Search
+  </ui-button>
+</div>
+  <div *ngIf="loading" class="mb-4">Loading...</div>
+  <div *ngIf="error" class="text-red-400 mb-4">{{ error }}</div>
+
+  <div class="articles-container w-full space-y-10">
+  <ng-container *ngFor="let source of getGroupedSources()">
+    <section class="border border-gray-700 p-4 rounded">
+      <h3
+        class="text-lg font-semibold text-gray-300 mb-3 capitalize sticky top-0 bg-gray-800 z-10"
+      >
+        {{ source }}
+      </h3>
+      <div>
+        <ul class="flex flex-row overflow-auto pb-3 gap-4 pr-3 pl-2">
+            <app-article-card
+              *ngFor="let article of results[source]?.articles"
+              [article]="article"
+              class="min-w-[300px] max-w-[300px] flex-shrink-0"
+            ></app-article-card>
+
+          <li
+            *ngIf="results[source]?.hasMore"
+            class="flex items-center"
+          >
+            <button
+              [disabled]="loadLocks.contains('load:' + source)"
+              class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+              (click)="loadMore(source)"
+            >
+              Load more
+            </button>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </ng-container>
+</div>
+
+

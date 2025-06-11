@@ -1,0 +1,118 @@
+<div class="flex flex-col sm:flex-row gap-2 mb-4 items-stretch w-full">
+  <ui-input
+    [(ngModel)]="query"
+    placeholder="Search scientific articles..."
+    (keyup.enter)="fetchArticles()"
+    class="w-full sm:flex-1 sm:h-full min-w-0"
+  />
+
+  <select
+    [(ngModel)]="searchType"
+    class="bg-gray-800 text-white border border-gray-600 rounded px-2 py-1 w-full sm:w-40 h-[41px]"
+  >
+    <option value="author">Author</option>
+    <option value="tag">Tag</option>
+  </select>
+
+  <div class="relative">
+    <button
+      (click)="toggleDropdown()"
+      class="bg-gray-700 text-gray-100 px-4 py-2 rounded hover:bg-gray-600 w-full sm:w-auto"
+    >
+      Sources ({{ selectedSources.size }})
+    </button>
+
+    <button
+      (click)="openSourceInfoModal()"
+      class="bg-gray-700 text-gray-100 px-2 py-2 rounded hover:bg-gray-600"
+      aria-label="Source explanations"
+      title="What are these sources?"
+    >
+      ?
+    </button>
+    <div
+  *ngIf="showSourceInfoModal"
+  class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
+>
+  <div class="bg-gray-900 text-white rounded p-6 max-w-md w-full">
+    <h2 class="text-lg font-semibold mb-4">Source Descriptions</h2>
+    <ul class="list-disc list-inside space-y-2">
+      <li><strong>Core:</strong> Aggregates open access research from various repositories.</li>
+      <li><strong>Crossref:</strong> Metadata for scholarly publications across disciplines.</li>
+      <li><strong>ArXiv:</strong> Preprints repository mainly for physics, math, computer science.</li>
+      <li><strong>PubMed:</strong> Focused on biomedical literature and medical sciences.</li>
+    </ul>
+    <button
+      (click)="closeSourceInfoModal()"
+      class="mt-6 bg-blue-600 px-4 py-2 rounded hover:bg-blue-500"
+    >
+      Close
+    </button>
+  </div>
+</div>
+
+
+    <div
+      *ngIf="dropdownOpen"
+      class="absolute right-0 mt-2 w-48 bg-gray-800 border border-gray-700 rounded shadow-lg z-50"
+    >
+      <label
+        *ngFor="let source of getSources()"
+        class="flex items-center px-4 py-2 hover:bg-gray-700 cursor-pointer"
+      >
+        <input
+          type="checkbox"
+          [checked]="selectedSources.has(source)"
+          (change)="toggleSource(source)"
+          class="mr-2"
+        />
+        <span class="capitalize text-gray-100">{{ source }}</span>
+      </label>
+    </div>
+  </div>
+
+  <ui-button
+    [disabled]="loadLocks.contains('fetch')"
+    color="blue"
+    (click)="fetchArticles()"
+    class="w-full sm:w-32 sm:h-full"
+  >
+    Search
+  </ui-button>
+</div>
+
+<div *ngIf="loading">Loading...</div>
+<div *ngIf="error">{{ error }}</div>
+
+<div class="articles-container w-full space-y-10">
+  <ng-container *ngFor="let source of getGroupedSources()">
+    <section class="border border-gray-700 p-4 rounded">
+      <h3
+        class="text-lg font-semibold text-gray-300 mb-3 capitalize sticky top-0 bg-gray-800 z-10"
+      >
+        {{ source }}
+      </h3>
+      <div>
+        <ul class="flex flex-row overflow-auto pb-3 gap-4 pr-3 pl-2">
+          <scientific-article
+            *ngFor="let article of groupedArticles[source]?.articles"
+            [article]="article"
+          ></scientific-article>
+
+          <li
+            *ngIf="groupedArticles[source]?.hasMore"
+            class="flex items-center"
+          >
+            <button
+              [disabled]="loadLocks.contains('load:' + source)"
+              class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+              (click)="loadMore(source)"
+            >
+              Load more
+            </button>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </ng-container>
+</div>

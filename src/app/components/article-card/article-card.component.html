@@ -1,0 +1,50 @@
+<div class="relative">
+  <a
+    [href]="article.url"
+    (click)="onArticleClick(article.url, $event)"
+    target="_blank"
+    class="block p-4 rounded-lg shadow-md bg-gray-800 text-gray-100 hover:bg-gray-700 transition duration-200 h-[250px]"
+  >
+    <div class="flex flex-col h-full">
+      <h3
+        class="text-lg font-bold mb-2 max-h-[100px] line-clamp-2"
+        [title]="article.title"
+      >
+        {{ article.title }}
+      </h3>
+      <p
+        class="text-sm text-gray-300 mb-4 line-clamp-2 flex-1"
+        [title]="article.abstract"
+      >
+        {{ article.abstract }}
+      </p>
+      <div class="text-xs text-right text-gray-400">
+        by {{ article.author }}
+      </div>
+    </div>
+  </a>
+
+  <app-dropdown
+    *ngIf="isAuthenticated$ | async"
+    [article]="article"
+    (showModal)="isFavoriteOpen=true"
+    (showToReadModal)="isReadOpen=true"
+    class="absolute top-0 right-0 z-20"
+  ></app-dropdown>
+
+  <app-favorite-modal
+    *ngIf="isFavoriteOpen"
+    [title]="article.title"
+    [description]="article.abstract"
+    (save)="saveFavorite($event)"
+    (close)="closeModal()"
+  />
+
+  <app-to-read-modal
+    *ngIf="isReadOpen"
+       [title]="article.title"
+    [description]="article.abstract"
+    (save)="saveToRead($event)"
+    (close)="closeModal()"
+  />
+</div>

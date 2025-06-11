@@ -1,0 +1,40 @@
+<section class="mt-3 mb-6 w-full text-white border rounded bg-gray-800">
+  <div class="flex justify-between items-center px-4 py-3 border-b border-gray-700">
+    <h3 class="text-xl font-semibold">Most Popular Articles</h3>
+    <button (click)="isCollapsed = !isCollapsed" class="text-sm text-blue-300 hover:underline focus:outline-none">
+      {{ isCollapsed ? 'Show' : 'Hide' }}
+    </button>
+  </div>
+
+  <div *ngIf="!isCollapsed">
+    <div class="flex">
+      <button
+        (click)="setTab('downloads')"
+        class="flex-1 px-4 py-2 text-center transition-colors"
+        [ngClass]="{
+          'bg-blue-600 font-semibold': activeTab === 'downloads',
+          'bg-gray-700 hover:bg-gray-600': activeTab !== 'downloads'
+        }"
+      >
+        Most Downloaded
+      </button>
+      <button
+        (click)="setTab('doi')"
+        class="flex-1 px-4 py-2 text-center transition-colors"
+        [ngClass]="{
+          'bg-blue-600 font-semibold': activeTab === 'doi',
+          'bg-gray-700 hover:bg-gray-600': activeTab !== 'doi'
+        }"
+      >
+        Most DOI Accessed
+      </button>
+    </div>
+
+    <div class="bg-gray-900 p-1 sm:p-4 rounded-b-md">
+      <app-most-popular-scientific-articles [visible]="activeTab === 'downloads'" />
+      <app-most-popular-doi-articles [visible]="activeTab === 'doi'" />
+    </div>
+  </div>
+</section>
+
+

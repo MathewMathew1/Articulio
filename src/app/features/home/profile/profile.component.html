@@ -1,0 +1,8 @@
+<section class="px-4 py-6 mx-auto w-[100%] lg:w-[85%]">
+  <app-user-info [user]="userInfo"></app-user-info>
+  <app-favorite-articles-section [articles]="userFavoriteArticles"></app-favorite-articles-section>
+  <app-to-read-articles-section [articles]="userToReadArticles"></app-to-read-articles-section>
+  <app-favorite-scientific-articles-section [articles]="userFavoriteScientificArticles"></app-favorite-scientific-articles-section>
+  <app-to-read-scientific-articles-section [articles]="userToReadScientificArticles"></app-to-read-scientific-articles-section>
+  <app-history-section [visitedLinks]="userInfo.visitedLinks"/>
+</section>

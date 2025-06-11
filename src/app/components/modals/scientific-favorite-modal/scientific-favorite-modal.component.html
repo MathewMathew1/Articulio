@@ -1,0 +1,58 @@
+<div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[1000]">
+  <div class="bg-gray-900 text-white p-6 rounded w-full max-w-[600px] shadow-lg">
+    <h2 class="text-xl mb-4">
+      {{ isUpdate ? 'Update Favorite' : 'Add to Favorites' }}
+    </h2>
+
+    <label class="block mb-2">
+      Title:
+      <input
+        [(ngModel)]="title"
+        class="w-full p-2 mt-1 rounded bg-gray-800 border border-gray-600"
+      />
+    </label>
+
+    <label class="block mb-4">
+      Description:
+      <textarea
+        [(ngModel)]="description"
+        class="w-full p-2 mt-1 rounded bg-gray-800 border border-gray-600 h-[200px]"
+      ></textarea>
+    </label>
+
+    <label class="block mb-4">
+      Notes:
+      <textarea
+        [(ngModel)]="note"
+        class="w-full p-2 mt-1 rounded bg-gray-800 border border-gray-600 h-[100px]"
+      ></textarea>
+    </label>
+
+    <label class="block mb-4">
+      DOI:
+      <input
+        [(ngModel)]="doi"
+        class="w-full p-2 mt-1 rounded bg-gray-800 border border-gray-600"
+        placeholder="Digital Object Identifier"
+      />
+    </label>
+
+    <label class="block mb-4">
+      Download URL:
+      <input
+        [(ngModel)]="downloadUrl"
+        class="w-full p-2 mt-1 rounded bg-gray-800 border border-gray-600"
+        placeholder="https://example.com/download"
+      />
+    </label>
+
+    <div class="flex justify-end gap-2">
+      <button (click)="close.emit()" class="px-4 py-2 bg-gray-700 rounded">
+        Cancel
+      </button>
+      <button (click)="saveChanges()" class="px-4 py-2 bg-blue-600 rounded">
+        {{ isUpdate ? 'Update' : 'Save' }}
+      </button>
+    </div>
+  </div>
+</div>

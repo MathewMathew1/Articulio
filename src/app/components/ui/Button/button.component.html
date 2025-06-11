@@ -1,0 +1,30 @@
+<button
+  [type]="type"
+  [disabled]="disabled"
+  [ngClass]="[
+    class,
+    color !== 'white' ? 'text-white' : 'text-black',
+    'rounded-md transition-colors duration-200 disabled:cursor-not-allowed disabled:opacity-50',
+    small ? 'px-2 py-1' : 'px-4 py-2 font-bold',
+    color === 'gray' || color === 'default'
+      ? 'bg-gray-400 hover:bg-gray-300 focus-visible:bg-gray-300'
+      : '',
+    color === 'black'
+      ? 'bg-black hover:bg-gray-800 focus-visible:bg-gray-800'
+      : '',
+    color === 'white'
+      ? 'bg-white hover:bg-gray-300 focus-visible:bg-gray-300'
+      : '',
+    color === 'red'
+      ? 'bg-red-500 hover:bg-red-400 focus-visible:bg-red-400'
+      : '',
+    color === 'green'
+      ? 'bg-green-500 hover:bg-green-300 focus-visible:bg-green-400'
+      : '',
+    color === 'blue'
+      ? 'bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-400 hover:to-blue-400 focus-visible:from-cyan-400 focus-visible:to-blue-400'
+      : ''
+  ]"
+>
+  <ng-content></ng-content>
+</button>
