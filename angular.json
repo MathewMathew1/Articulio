@@ -21,8 +21,8 @@
             "assets": [
               {
                 "glob": "_redirects",
-
-                "input": "public"
+                "input": "src",
+                "output": "/"
               }
             ],
             "styles": ["src/styles.css"],
