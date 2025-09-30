@@ -1,23 +1,23 @@
-<section class="my-6 p-4 border rounded bg-gray-900 text-gray-300 max-h-[500px] overflow-auto">
-  <div class="flex justify-between items-center mb-3">
-    <h3 class="text-xl font-semibold">Most Viewed Articles</h3>
+<section class="my-6 p-6 border border-gray-700 rounded-2xl bg-gray-800 text-gray-200 max-h-[500px] overflow-auto shadow-lg">
+  <div class="flex justify-between items-center mb-4">
+    <h3 class="text-2xl font-bold text-white tracking-wide">Most Viewed Articles</h3>
     <button
       (click)="isCollapsed = !isCollapsed"
-      class="text-sm text-blue-300 hover:underline focus:outline-none"
+      class="text-sm text-blue-400 hover:text-blue-500 hover:underline focus:outline-none transition"
     >
       {{ isCollapsed ? "Show" : "Hide" }}
     </button>
   </div>
 
   <div *ngIf="!isCollapsed">
-    <ul *ngIf="articles.length; else noData">
-      <li *ngFor="let article of articles" class="mb-4">
+    <ul *ngIf="articles.length; else noData" class="space-y-4">
+      <li *ngFor="let article of articles" class="p-3 rounded-lg hover:bg-gray-700 transition duration-200">
         <a
           (click)="onArticleClick(article.articleUrl)"
           [href]="article.articleUrl"
           target="_blank"
           rel="noopener noreferrer"
-          class="hover:text-blue-400 font-bold inline-block p-1 rounded hover:bg-gray-700"
+          class="text-lg font-semibold underline hover:text-blue-400 break-words"
         >
           {{ article.title || article.articleUrl }}
         </a>
@@ -26,15 +26,17 @@
         </p>
       </li>
     </ul>
+
     <button
       *ngIf="!loadedAll"
       (click)="loadArticles()"
-      class="mt-4 px-4 py-2 text-sm bg-blue-600 hover:bg-blue-700 text-white rounded"
+      class="mt-6 w-full px-4 py-2 text-sm font-semibold bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow-md transition duration-200 disabled:bg-gray-500 disabled:cursor-not-allowed"
     >
       Load More
     </button>
+
     <ng-template #noData>
-      <p>No popular articles found.</p>
+      <p class="text-center text-gray-400 mt-4">No popular articles found.</p>
     </ng-template>
   </div>
 </section>
